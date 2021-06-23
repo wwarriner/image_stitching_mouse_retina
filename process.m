@@ -2,13 +2,11 @@ function process(root_folder)
 
 ifi = InputFiles(root_folder);
 
-output_folder = fullfile(root_folder, "..", "out"); 
-[~, ~] = mkdir(output_folder);
-ofi = OutputFiles(output_folder);
-
 subject_count = ifi.get_subject_count();
 for subject = 1 : subject_count
     subject_name = ifi.get_subject_folder_name(subject);
+    output_folder = fullfile(root_folder, "..", "out", subject_name);
+    ofi = OutputFiles(output_folder);
     
     slo_images = ifi.read_slo_images(subject);
     transforms = register(slo_images);
