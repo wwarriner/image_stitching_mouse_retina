@@ -38,6 +38,13 @@ for i = 2 : count
         );
     matched_points_first = points{i}(index_pairs(:, 1), :);
     matched_points_second = points{1}(index_pairs(:, 2), :);
+
+    a = de2bi(i+33, 32);
+    b = de2bi(31415, 32);
+    c = xor(a, b);
+    d = bi2de(c);
+    rng(d);
+
     transforms(i) = estimateGeometricTransform2D(...
         matched_points_first, matched_points_second, ...
         "rigid", ...
