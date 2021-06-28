@@ -1,15 +1,17 @@
 function process(root_folder)
 
 ifi = InputFiles(root_folder);
+seeds = Seeds(fullfile(root_folder, "seeds.csv"));
 
 subject_count = ifi.get_subject_count();
 for subject = 1 : subject_count
     subject_name = ifi.get_subject_folder_name(subject);
+    seed = seeds.get(subject_name);
     output_folder = fullfile(root_folder, "..", "out", subject_name);
     ofi = OutputFiles(output_folder);
     
     slo_images = ifi.read_slo_images(subject);
-    transforms = register(slo_images);
+    transforms = register(slo_images, seed);
     [slo, slo_rgb] = combine(slo_images, transforms);
     ofi.write_slo_image(slo, subject_name);
     ofi.write_slo_rgb_image(slo_rgb, subject_name);
